@@ -9,9 +9,10 @@ import Logic.ImageProcessor;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -44,6 +45,7 @@ public class LogInUI extends javax.swing.JFrame {
         logInButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,6 +70,13 @@ public class LogInUI extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -78,7 +87,9 @@ public class LogInUI extends javax.swing.JFrame {
                     .addComponent(exitButton)
                     .addComponent(registerButton)
                     .addComponent(logInButton))
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(52, 52, 52))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {exitButton, logInButton, registerButton});
@@ -88,8 +99,13 @@ public class LogInUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(79, 79, 79)
                 .addComponent(logInButton)
-                .addGap(18, 18, 18)
-                .addComponent(registerButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(registerButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jButton1)))
                 .addGap(18, 18, 18)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(77, Short.MAX_VALUE))
@@ -176,6 +192,27 @@ public class LogInUI extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            final JFileChooser fc = new JFileChooser();
+            fc.setAcceptAllFileFilterUsed(false);
+            fc.addChoosableFileFilter(new ImageFilter());
+            //In response to a button click:
+            int returnVal = fc.showOpenDialog(logInButton);
+            File userFile = null;
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                userFile = fc.getSelectedFile();
+        BufferedImage img ;
+        FileInputStream image = imageProcessor.loadImage(userFile.getPath());
+        try {
+            img = ImageIO.read(image);
+            imageProcessor.detectHair(img);
+            ImageIO.write(img, "png",new File("detected_hair.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(LogInUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -213,6 +250,7 @@ public class LogInUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton logInButton;
     private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables
