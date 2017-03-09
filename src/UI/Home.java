@@ -94,7 +94,8 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        System.exit(0);
+        new LogInUI().setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_exitButtonActionPerformed
 
     /**

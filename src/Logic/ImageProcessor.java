@@ -249,12 +249,11 @@ public class ImageProcessor {
         
         return img;
     }
-    public  double recognizeFace(File userFile, BufferedImage authImage) {
+    public  double recognizeFace(BufferedImage userImage, BufferedImage authImage) {
         
     double precentage = 0;        
     try {
         // take buffer data from userinput file and create the data buffer 
-        BufferedImage userImage = ImageIO.read(userFile);
         DataBuffer userImageDB = userImage.getData().getDataBuffer();
         int userImageSize = userImageDB.getSize();
         // take buffer data from saved file and create the data buffer 
@@ -264,16 +263,55 @@ public class ImageProcessor {
         // compare data-buffers of the two Images
         if(userImageSize == authImageSize) {
             for(int i=0; i<userImageSize; i++) { 
-                if(userImageDB.getElem(i) != authImageDB.getElem(i)) {
+                System.out.println("comparing " + i);
+                if(userImageDB.getElem(i) == authImageDB.getElem(i)) {
                     count = count + 1;
+                    System.out.println("similar");
                 }
+                else{System.out.println("diff");}
             }
-            precentage = count*100 /userImageSize;
+            precentage = count*100 /(userImageSize);
         }
     } 
     catch (Exception e) { 
         System.out.println("Failed to compare image files ...");
+        e.printStackTrace();
     }
         return precentage;
+    }
+    
+    public  double recognizeFaceWithColorCompare(BufferedImage userImage, BufferedImage authImage) {
+        int uheight = userImage.getHeight();
+        int uwidth = authImage.getWidth(); 
+        int aheight = userImage.getHeight();
+        int awidth = authImage.getWidth();
+        
+        double error = 100;
+        
+        if(uheight == aheight || uwidth == awidth){
+            
+            error = 0;
+            for(int i=0; i<uheight; i++){
+                for(int j=0; j<uwidth; j++){
+
+                     Color ucolor = new Color(userImage.getRGB(j,i));
+                     Color acolor = new Color(authImage.getRGB(j, i));
+                     float redDif = Math.abs(ucolor.getRed()-acolor.getRed());
+                     float greenDif =Math.abs(ucolor.getGreen()-acolor.getGreen()) ;
+                     float blueDif = Math.abs(ucolor.getBlue()-acolor.getBlue());
+                     
+                     float Diff = redDif + greenDif + blueDif ;
+                     
+                     error = error + Diff;
+                     
+                }     
+            }
+            
+            error = error/(uheight*uwidth*3);
+        }
+        
+        
+        
+    return error;
     }
 }
