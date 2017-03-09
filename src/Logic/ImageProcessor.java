@@ -249,7 +249,9 @@ public class ImageProcessor {
         
         return img;
     }
-    public  boolean recognizeFace(File userFile, BufferedImage authImage) {        
+    public  double recognizeFace(File userFile, BufferedImage authImage) {
+        
+    double precentage = 0;        
     try {
         // take buffer data from userinput file and create the data buffer 
         BufferedImage userImage = ImageIO.read(userFile);
@@ -258,22 +260,20 @@ public class ImageProcessor {
         // take buffer data from saved file and create the data buffer 
         DataBuffer authImageDB = authImage.getData().getDataBuffer();
         int authImageSize = authImageDB.getSize();
+        int count = 0 ;
         // compare data-buffers of the two Images
         if(userImageSize == authImageSize) {
             for(int i=0; i<userImageSize; i++) { 
                 if(userImageDB.getElem(i) != authImageDB.getElem(i)) {
-                    return false;
+                    count = count + 1;
                 }
             }
-            return true;
-        }
-        else {
-            return false;
+            precentage = count*100 /userImageSize;
         }
     } 
     catch (Exception e) { 
         System.out.println("Failed to compare image files ...");
-        return  false;
     }
+        return precentage;
     }
 }
