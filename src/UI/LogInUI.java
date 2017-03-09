@@ -6,15 +6,21 @@
 package UI;
 
 import Logic.ImageProcessor;
+import java.awt.BorderLayout;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -42,10 +48,24 @@ public class LogInUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         logInButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        picPanel = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,19 +97,44 @@ public class LogInUI extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout picPanelLayout = new javax.swing.GroupLayout(picPanel);
+        picPanel.setLayout(picPanelLayout);
+        picPanelLayout.setHorizontalGroup(
+            picPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+        picPanelLayout.setVerticalGroup(
+            picPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(exitButton)
-                    .addComponent(registerButton)
-                    .addComponent(logInButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(52, 52, 52))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(logInButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(registerButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(exitButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(picPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {exitButton, logInButton, registerButton});
@@ -97,18 +142,20 @@ public class LogInUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(79, 79, 79)
+                .addContainerGap(40, Short.MAX_VALUE)
                 .addComponent(logInButton)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(registerButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton1)))
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
+                .addComponent(registerButton)
+                .addGap(16, 16, 16)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(picPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {exitButton, logInButton, registerButton});
@@ -121,6 +168,7 @@ public class LogInUI extends javax.swing.JFrame {
         if(fileName != null)
         {
             //Create a file chooser
+            JOptionPane.showMessageDialog(null, "Upload Your Image!");
             final JFileChooser fc = new JFileChooser();
             fc.setAcceptAllFileFilterUsed(false);
             fc.addChoosableFileFilter(new ImageFilter());
@@ -133,7 +181,48 @@ public class LogInUI extends javax.swing.JFrame {
                 System.out.println("Opening: " + file.getPath() + "." );
                 fileName = "userImages\\"+fileName + ".png";
                 ;
-                imageProcessor.saveImage(imageProcessor.encryptImage(imageProcessor.loadImage(file.getPath())),fileName);
+                int showImageBox = JOptionPane.YES_NO_OPTION;
+                int showImage = JOptionPane.showConfirmDialog (null, "Your Face has been detected! Click 'Yes' to check it! ","Warning",showImageBox);
+                if(showImage == JOptionPane.YES_OPTION)
+                {
+                    try {
+                        FileInputStream display = imageProcessor.loadImage(file.getPath());
+                        BufferedImage myPicture = ImageIO.read(new File(file.getPath()));
+                        imageProcessor.detectFace(myPicture);
+                        JFrame editorFrame = new JFrame("Image Demo");
+                                             
+                        editorFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+                        ImageIcon imageIcon = new ImageIcon(myPicture);
+                        JLabel jLabel = new JLabel();
+                        jLabel.setIcon(imageIcon);
+                        editorFrame.getContentPane().add(jLabel, BorderLayout.CENTER);
+
+                        editorFrame.pack();
+                        editorFrame.setLocationRelativeTo(null);
+                        editorFrame.setVisible(true);
+                        
+                        int confirmImageBox = JOptionPane.YES_NO_OPTION;
+                        int confirmImage = JOptionPane.showConfirmDialog (null, "Register with the detected face? ","Warning",confirmImageBox);
+                        if(confirmImage == JOptionPane.YES_OPTION)
+                        {
+                            ByteArrayOutputStream mp = new ByteArrayOutputStream();
+                            ImageIO.write(myPicture,"PNG",mp);
+                            imageProcessor.saveImage(mp,fileName);
+                        }
+                        else
+                        {
+                            
+                            JOptionPane.showMessageDialog(null, "Registration Aborted!");
+                        }
+                        
+                        editorFrame.setVisible(false);
+                        
+                    } catch (IOException ex) {
+                        Logger.getLogger(LogInUI.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+                
                 
 //                imageProcessor.encryptImage(file.getPath(), "enc");
             } else {
@@ -176,7 +265,7 @@ public class LogInUI extends javax.swing.JFrame {
                 System.out.println("Open command cancelled by user." );
             }
             //Compare the two images
-            if(imageProcessor.compareImages(userFile, authImage)){
+            if(imageProcessor.compareExactImages(userFile, authImage)){
                 this.setVisible(false);
                 this.homePage = new Home(userName);
                 homePage.setVisible(true);
@@ -193,6 +282,8 @@ public class LogInUI extends javax.swing.JFrame {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            
+        
             final JFileChooser fc = new JFileChooser();
             fc.setAcceptAllFileFilterUsed(false);
             fc.addChoosableFileFilter(new ImageFilter());
@@ -205,13 +296,80 @@ public class LogInUI extends javax.swing.JFrame {
         FileInputStream image = imageProcessor.loadImage(userFile.getPath());
         try {
             img = ImageIO.read(image);
-            imageProcessor.detectHair(img);
-            ImageIO.write(img, "png",new File("detected_hair.png"));
+            imageProcessor.detectFace(img);
+            ImageIO.write(img, "png",new File("detected_new.png"));
         } catch (IOException ex) {
             Logger.getLogger(LogInUI.class.getName()).log(Level.SEVERE, null, ex);
         }
             }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            System.out.println("start");
+            BufferedImage myPicture;
+            myPicture = ImageIO.read(new File("Achala.png"));
+            if(myPicture != null){
+                
+                JFrame editorFrame = new JFrame("Image Demo");
+                editorFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+                
+                ImageIcon imageIcon = new ImageIcon(myPicture);
+                JLabel jLabel = new JLabel();
+                jLabel.setIcon(imageIcon);
+                editorFrame.getContentPane().add(jLabel, BorderLayout.CENTER);
+
+                editorFrame.pack();
+                editorFrame.setLocationRelativeTo(null);
+                editorFrame.setVisible(true);
+                
+                
+//            JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(200, 200, Image.SCALE_FAST)));
+//            picLabel.setPreferredSize(new Dimension(200, 200));
+//            picPanel.add(picLabel);
+//            
+//                System.out.println(picPanel.getHeight());
+//                System.out.println(picLabel.getHeight());
+//            picPanel.setVisible(true);
+//            picLabel.setVisible(true);
+//            System.out.println("end");
+//              ImageIcon image = new ImageIcon("Achala.png");
+//              if(image != null){
+//                JLabel label = new JLabel("what", new ImageIcon(myPicture.getScaledInstance(200, 200, Image.SCALE_FAST)), JLabel.CENTER);
+//                JPanel panel = new JPanel(new BorderLayout());
+//                panel.setPreferredSize(new Dimension(200, 200));
+//                label.setPreferredSize(new Dimension(150, 150));
+//                panel.add( label, BorderLayout.CENTER );
+//                System.out.println("end");
+//                this.add(panel);
+//                System.out.println(panel.getHeight());
+//                System.out.println(label.getHeight());
+                
+//                JLabel label = new JLabel();
+//                label.setBounds(0, 0, 200, 200);
+//                label.setVisible(true);
+//                label.setIcon(image);
+//
+//                JPanel panel = new JPanel();
+//                panel.setBounds(0, 0, 300, 300);
+//                panel.setVisible(true);
+//                panel.setLayout(null);
+//                this.add(panel);
+//                panel.add(label);
+//                System.out.println(panel.getHeight());
+//                System.out.println(label.getHeight());
+                   
+                
+//
+//              }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LogInUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,7 +409,10 @@ public class LogInUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JButton logInButton;
+    private javax.swing.JPanel picPanel;
     private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables
 }

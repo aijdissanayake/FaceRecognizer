@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
  * @author Achala PC
  */
 public class ImageProcessor {
-    
+    //face detected message
     public void saveImage(ByteArrayOutputStream img, String filePath)
     {
         try {
@@ -59,7 +59,7 @@ public class ImageProcessor {
         return img;
     }
     
-    public  boolean compareImages(File userFile, BufferedImage authImage) {        
+    public  boolean compareExactImages(File userFile, BufferedImage authImage) {        
     try {
         // take buffer data from userinput file and create the data buffer 
         BufferedImage userImage = ImageIO.read(userFile);
@@ -152,8 +152,14 @@ public class ImageProcessor {
 //        BufferedImage imageBuffer = ImageIO.read(ip);
         int height = img.getHeight();
         int width = img.getWidth();
+        int[][] faceDetails = new int[height][3];
         
         for(int i=0; i<height; i++){
+            int skinCount= 0 ;
+            boolean skinStarted = false;
+            int[] rowDetail = new int[3];
+            rowDetail[0] = i;
+            rowDetail[1] = 1000;
             for(int j=0; j<width; j++){
                 
                  Color color = new Color(img.getRGB(j,i));
@@ -175,8 +181,18 @@ public class ImageProcessor {
                  else{
                      h = 360 - theta;
                  }
-                 if(g<f1 && g>f2 && w>0.001 && (h>240 || h<=20)){
+                 if(g<f1 && g>f2 && w>0.001 && (h>280 || h<=30)){
+//                 if(g<f1 && g>f2 && w>0.001){
+                     
+                     
                      System.out.println("skin pixel" + i+ " "  + j);
+                     if(!skinStarted)
+                     { 
+                         skinStarted = true;
+                         rowDetail[1] = j;
+                         
+                     }
+                     skinCount = skinCount + 1;
                  }
                  else{
                      
@@ -186,15 +202,17 @@ public class ImageProcessor {
                  
             }
             
+            rowDetail[2] = skinCount;
+            faceDetails[i] = rowDetail;
+            System.out.println(rowDetail);
+            
         }
-        
+        System.out.println(faceDetails);
         return img;
     }
     
     public BufferedImage detectHair(BufferedImage img) throws FileNotFoundException, IOException{
         
-//        FileInputStream ip = new FileInputStream("dd");
-//        BufferedImage imageBuffer = ImageIO.read(ip);
         int height = img.getHeight();
         int width = img.getWidth();
         
@@ -207,12 +225,6 @@ public class ImageProcessor {
                  float blue = color.getBlue();
                  
                  double ii = (red+green+blue)/3;
-//                 float r = red/(red+green+blue);
-//                 float g = green/(red+green+blue);
-//                 double w = (r-0.33)*(r-0.33) + (g-0.33)*(g-0.33);
-//                 
-//                 double f1 = -1.3676*r*r + 1.0743*r + 0.2;
-//                 double f2 = -0.776*r*r + 0.5601*r + 0.18;
                  double d = (0.5*(2*red -(green + blue))/Math.pow((Math.pow((red-green),2)+(red - blue)*(green - blue)),0.5));
                  double theta = Math.acos(d) * (180 / Math.PI );
                  double h;
@@ -236,5 +248,32 @@ public class ImageProcessor {
         }
         
         return img;
+    }
+    public  boolean recognizeFace(File userFile, BufferedImage authImage) {        
+    try {
+        // take buffer data from userinput file and create the data buffer 
+        BufferedImage userImage = ImageIO.read(userFile);
+        DataBuffer userImageDB = userImage.getData().getDataBuffer();
+        int userImageSize = userImageDB.getSize();
+        // take buffer data from saved file and create the data buffer 
+        DataBuffer authImageDB = authImage.getData().getDataBuffer();
+        int authImageSize = authImageDB.getSize();
+        // compare data-buffers of the two Images
+        if(userImageSize == authImageSize) {
+            for(int i=0; i<userImageSize; i++) { 
+                if(userImageDB.getElem(i) != authImageDB.getElem(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    } 
+    catch (Exception e) { 
+        System.out.println("Failed to compare image files ...");
+        return  false;
+    }
     }
 }
