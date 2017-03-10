@@ -15,11 +15,14 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     private String userName;
-    public Home(String userName) {
+    private Double match;
+    public Home(String userName, Double match) {
         this.userName = userName;
         String details = "You are logged in as " + userName ;
         initComponents();
         this.logInDetails.setText(details);
+        this.match = match;
+        
         
     }
 
@@ -94,7 +97,7 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        new LogInUI().setVisible(true);
+        new LogInUI(match).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_exitButtonActionPerformed
 

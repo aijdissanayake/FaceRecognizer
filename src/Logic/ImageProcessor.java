@@ -59,33 +59,7 @@ public class ImageProcessor {
         return img;
     }
     
-    public  boolean compareExactImages(File userFile, BufferedImage authImage) {        
-    try {
-        // take buffer data from userinput file and create the data buffer 
-        BufferedImage userImage = ImageIO.read(userFile);
-        DataBuffer userImageDB = userImage.getData().getDataBuffer();
-        int userImageSize = userImageDB.getSize();
-        // take buffer data from saved file and create the data buffer 
-        DataBuffer authImageDB = authImage.getData().getDataBuffer();
-        int authImageSize = authImageDB.getSize();
-        // compare data-buffers of the two Images
-        if(userImageSize == authImageSize) {
-            for(int i=0; i<userImageSize; i++) { 
-                if(userImageDB.getElem(i) != authImageDB.getElem(i)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        else {
-            return false;
-        }
-    } 
-    catch (Exception e) { 
-        System.out.println("Failed to compare image files ...");
-        return  false;
-    }
-}
+    
     public ByteArrayOutputStream encryptImage(FileInputStream rawImage){
 //        BufferedImage img = null;
         ByteArrayOutputStream  encImage = null;
@@ -181,7 +155,7 @@ public class ImageProcessor {
                  else{
                      h = 360 - theta;
                  }
-                 if(g<f1 && g>f2 && w>0.001 && (h>280 || h<=30)){
+                 if(g<f1 && g>f2 && w>0.001 && (h>250|| h<=35)){
 //                 if(g<f1 && g>f2 && w>0.001){
                      
                      
@@ -249,6 +223,34 @@ public class ImageProcessor {
         
         return img;
     }
+    public  boolean compareExactImages(File userFile, BufferedImage authImage) {        
+    try {
+        // take buffer data from userinput file and create the data buffer 
+        BufferedImage userImage = ImageIO.read(userFile);
+        DataBuffer userImageDB = userImage.getData().getDataBuffer();
+        int userImageSize = userImageDB.getSize();
+        // take buffer data from saved file and create the data buffer 
+        DataBuffer authImageDB = authImage.getData().getDataBuffer();
+        int authImageSize = authImageDB.getSize();
+        // compare data-buffers of the two Images
+        if(userImageSize == authImageSize) {
+            for(int i=0; i<userImageSize; i++) { 
+                if(userImageDB.getElem(i) != authImageDB.getElem(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
+    } 
+    catch (Exception e) { 
+        System.out.println("Failed to compare image files ...");
+        return  false;
+    }
+}
+    
     public  double recognizeFace(BufferedImage userImage, BufferedImage authImage) {
         
     double precentage = 0;        
@@ -271,6 +273,9 @@ public class ImageProcessor {
                 else{System.out.println("diff");}
             }
             precentage = count*100 /(userImageSize);
+        }
+        else{
+            precentage = -1;
         }
     } 
     catch (Exception e) { 
@@ -309,6 +314,10 @@ public class ImageProcessor {
             
             error = error/(uheight*uwidth*3);
         }
+        else{
+            error = -1;
+        }
+        
         
         
         

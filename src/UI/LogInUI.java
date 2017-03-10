@@ -34,9 +34,11 @@ public class LogInUI extends javax.swing.JFrame {
     
     private ImageProcessor imageProcessor = new ImageProcessor();
     private Home homePage;
+    private double match = 50;
     
-    public LogInUI() {
+    public LogInUI(Double match) {
         initComponents();
+        this.match= match;
     }
 
     /**
@@ -52,9 +54,9 @@ public class LogInUI extends javax.swing.JFrame {
         logInButton = new javax.swing.JButton();
         registerButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -90,45 +92,44 @@ public class LogInUI extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("BIO-METRIC AUTHENTICATION WITH FACE RECOGNITION");
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = {
+                " * Processing images may take few seconds while logging and registering.",
+                " * All the images needed to be 200(width) X 280(height).",
+                " * Images with face in the full image area are ideal.",
+                " * Color of the face should be a natural color for detection.",
+                " * All the images are encrypted before storing."
+
+            };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(exitButton)
-                    .addComponent(logInButton))
-                .addGap(27, 27, 27)
-                .addComponent(registerButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addGap(30, 30, 30))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90))))
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(logInButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(registerButton))
+                            .addComponent(exitButton))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {exitButton, logInButton, registerButton});
@@ -137,18 +138,16 @@ public class LogInUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(logInButton)
                     .addComponent(registerButton))
-                .addGap(9, 9, 9)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addContainerGap())
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {exitButton, logInButton, registerButton});
@@ -175,7 +174,7 @@ public class LogInUI extends javax.swing.JFrame {
                 fileName = "userImages\\"+fileName + ".png";
                 ;
                 int showImageBox = JOptionPane.YES_NO_OPTION;
-                int showImage = JOptionPane.showConfirmDialog (null, "Your Face has been detected! Click 'Yes' to check it! ","Warning",showImageBox);
+                int showImage = JOptionPane.showConfirmDialog (null, "Your Face has been detected! Click 'Yes' to check it or 'No' to continue! ","Warning",showImageBox);
                 if(showImage == JOptionPane.YES_OPTION)
                 {
                     try {
@@ -183,7 +182,7 @@ public class LogInUI extends javax.swing.JFrame {
                         BufferedImage myPicture = ImageIO.read(new File(file.getPath()));
                         imageProcessor.detectFace(myPicture);
                         
-                        JFrame editorFrame = new JFrame("Image Demo");                    
+                        JFrame editorFrame = new JFrame("Face Detected");                    
                         editorFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                         ImageIcon imageIcon = new ImageIcon(myPicture);
                         JLabel jLabel = new JLabel();
@@ -197,10 +196,19 @@ public class LogInUI extends javax.swing.JFrame {
                         int confirmImageBox = JOptionPane.YES_NO_OPTION;
                         int confirmImage = JOptionPane.showConfirmDialog (null, "Register with the detected face? ","Warning",confirmImageBox);
                         if(confirmImage == JOptionPane.YES_OPTION)
-                        {
+                        {   
+                            if(myPicture.getHeight()==280 && myPicture.getWidth()==200){
                             ByteArrayOutputStream mp = new ByteArrayOutputStream();
                             ImageIO.write(myPicture,"PNG",mp);
-                            imageProcessor.saveImage(mp,fileName);
+                            File tempFile = new File("temp");
+                            ImageIO.write(myPicture, "PNG", tempFile);                            
+                            imageProcessor.saveImage(imageProcessor.encryptImage(new FileInputStream("temp")),fileName);
+                            tempFile.delete();
+                            
+                            }
+                            else{
+                            JOptionPane.showMessageDialog(null, "Image Size has to be 200(width)*300(height)!");                        
+                            }
                         }
                         else
                         {
@@ -241,11 +249,10 @@ public class LogInUI extends javax.swing.JFrame {
         }
         else
             {
-//            BufferedImage authImage = imageProcessor.decryptImage(encAuthImage);
-//            JOptionPane.showMessageDialog(null, "Press OK to upload your image");
+              JOptionPane.showMessageDialog(null, "Press OK to upload your image");
               BufferedImage authImage;
-            try {
-                    authImage = ImageIO.read(encAuthImage);
+                //decrypted
+                    authImage = imageProcessor.decryptImage(encAuthImage);
 
                 //Create a file chooser
                 final JFileChooser fc = new JFileChooser();
@@ -263,7 +270,7 @@ public class LogInUI extends javax.swing.JFrame {
                         userImage = ImageIO.read(userFile);
                         imageProcessor.detectFace(userImage);
                         
-                        JFrame editorFrame = new JFrame("Image Demo");  
+                        JFrame editorFrame = new JFrame("Face Detected");  
                         editorFrame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                         ImageIcon imageIcon = new ImageIcon(userImage);
                         JLabel jLabel = new JLabel();
@@ -279,14 +286,26 @@ public class LogInUI extends javax.swing.JFrame {
                         if(showImage == JOptionPane.YES_OPTION)
                         {
                         editorFrame.setVisible(false);
-                        ImageIO.write(userImage, "PNG", new File("A.png"));
-                        ImageIO.write(authImage, "PNG", new File("B.png"));
-                        double precentage = imageProcessor.recognizeFaceWithColorCompare(userImage, authImage);
-                        this.setVisible(false);
-                        String message = userName + " " + precentage ;
-                        this.homePage = new Home(message);
-                        homePage.setVisible(true);
+//                        ImageIO.write(userImage, "PNG", new File("userInput.png"));
+//                        ImageIO.write(authImage, "PNG", new File("stored.png"));
+                        double val = imageProcessor.recognizeFace(userImage, authImage);
+                        
+                        if(val != -1){
+                            if(val>=match){
+                                this.setVisible(false);
+                                this.homePage = new Home(userName,match);
+                                homePage.setVisible(true);
+                                }
+                            else
+                            {
+                             JOptionPane.showMessageDialog(null, "Matching was only "+val+"%. "+"Authentication need "+match+"%"+ " Try with another face");                                   
+                            }
                         }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Image Size has to be 200(width)*300(height)!");
+                        }
+                        }
+                        else{editorFrame.setVisible(false);}
 
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -297,9 +316,7 @@ public class LogInUI extends javax.swing.JFrame {
                 else {
                     System.out.println("Open command cancelled by user." );
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(LogInUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
             //Compare the two images
 //            if(imageProcessor.compareExactImages(userFile, authImage)){
 //                this.setVisible(false);
@@ -317,96 +334,6 @@ public class LogInUI extends javax.swing.JFrame {
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            
-        
-            final JFileChooser fc = new JFileChooser();
-            fc.setAcceptAllFileFilterUsed(false);
-            fc.addChoosableFileFilter(new ImageFilter());
-            //In response to a button click:
-            int returnVal = fc.showOpenDialog(logInButton);
-            File userFile = null;
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                userFile = fc.getSelectedFile();
-        BufferedImage img ;
-        FileInputStream image = imageProcessor.loadImage(userFile.getPath());
-        try {
-            img = ImageIO.read(image);
-            imageProcessor.detectFace(img);
-            ImageIO.write(img, "png",new File("detected_new.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(LogInUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            System.out.println("start");
-            BufferedImage myPicture;
-            myPicture = ImageIO.read(new File("Achala.png"));
-            if(myPicture != null){
-                
-                JFrame editorFrame = new JFrame("Image Demo");
-                editorFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
-                
-                ImageIcon imageIcon = new ImageIcon(myPicture);
-                JLabel jLabel = new JLabel();
-                jLabel.setIcon(imageIcon);
-                editorFrame.getContentPane().add(jLabel, BorderLayout.CENTER);
-
-                editorFrame.pack();
-                editorFrame.setLocationRelativeTo(null);
-                editorFrame.setVisible(true);
-                
-                
-//            JLabel picLabel = new JLabel(new ImageIcon(myPicture.getScaledInstance(200, 200, Image.SCALE_FAST)));
-//            picLabel.setPreferredSize(new Dimension(200, 200));
-//            picPanel.add(picLabel);
-//            
-//                System.out.println(picPanel.getHeight());
-//                System.out.println(picLabel.getHeight());
-//            picPanel.setVisible(true);
-//            picLabel.setVisible(true);
-//            System.out.println("end");
-//              ImageIcon image = new ImageIcon("Achala.png");
-//              if(image != null){
-//                JLabel label = new JLabel("what", new ImageIcon(myPicture.getScaledInstance(200, 200, Image.SCALE_FAST)), JLabel.CENTER);
-//                JPanel panel = new JPanel(new BorderLayout());
-//                panel.setPreferredSize(new Dimension(200, 200));
-//                label.setPreferredSize(new Dimension(150, 150));
-//                panel.add( label, BorderLayout.CENTER );
-//                System.out.println("end");
-//                this.add(panel);
-//                System.out.println(panel.getHeight());
-//                System.out.println(label.getHeight());
-                
-//                JLabel label = new JLabel();
-//                label.setBounds(0, 0, 200, 200);
-//                label.setVisible(true);
-//                label.setIcon(image);
-//
-//                JPanel panel = new JPanel();
-//                panel.setBounds(0, 0, 300, 300);
-//                panel.setVisible(true);
-//                panel.setLayout(null);
-//                this.add(panel);
-//                panel.add(label);
-//                System.out.println(panel.getHeight());
-//                System.out.println(label.getHeight());
-                   
-                
-//
-//              }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LogInUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -438,17 +365,24 @@ public class LogInUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LogInUI().setVisible(true);
+                try{
+                    new LogInUI(Double.parseDouble(JOptionPane.showInputDialog("Please Enter the Matching value for authentication [0 would authenticate any face image,100 need the exact face image, Default is 50%]: "))).setVisible(true);
+                
+                   }
+                catch(NumberFormatException e){
+                    JOptionPane.showMessageDialog(null, "You must enter a matching value");
+                }
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logInButton;
     private javax.swing.JButton registerButton;
     // End of variables declaration//GEN-END:variables
